@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissor</title>
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            background-color: #14213d;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            text-align: center;
+            margin-top: 0px;
+            width:fit-content;
+            padding: 0px;
+            border-radius: 50px;
+            background-color: rgb(252, 163, 17,0.4);
+            color: #e5e5e5;
+            border: 2px solid white;
+        }
+        h1{
+            font-family:'Times New Roman', Times, serif;
+            color: #fff;
+        }
+        button {
+            font-size: 10px;
+            padding: 10px;
+            margin: 10px;
+            width:70px;
+            height: 70px;
+            cursor: pointer;
+            border-radius: 50%;
+            border:5px solid #000;
+            transition-duration: 0.4s;
+        }
+        .table {
+            margin: 20px auto;
+            border: 2px solid white;
+            border-collapse: collapse;
+        }
+        .table-1 {
+            margin: 20px ;
+            border: 2px solid white;
+            border-collapse: collapse;
+        }
+        .table tr, .table td{
+            padding: 10px 20px;
+            border: 2px solid white;
+            font-size: 20px;
+        }
+        .table-1 tr, .table-1 td{
+            padding: 10px 20px;
+            border: 2px solid white;
+            font-size: 20px;
+        }
+        .count {
+            padding: 10px 20px;
+        }
+        button img {
+            width: 30px;
+            height: 30px;
+        }
+        button:hover {
+            background-color: rgb(111, 111, 111);
+            color: white;
+            box-shadow:10px 10px 50px rgb(255, 255, 255);
+        }
+        .choice-img {
+            width: 60px;
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    
+        <h1>Rock-Paper-Scissor</h1>
+        <div>
+            <button onclick="play('Rock')"><img src="assets/rock.png" ></button>
+            <button onclick="play('Paper')"><img src="assets/paper.png" ></button>
+            <button onclick="play('Scissor')"><img src="assets/scissors.png" ></button>
+        </div>
+        <p id="game-result">-</p>
+        <table class="table">
+            <tr>
+                <td>You</td>
+                <td>Computer</td>
+            </tr>
+            <tr>
+                <td><p id="user-choice">-</p></td>
+                <td><p id="computer-choice">-</p></td>
+            </tr>
+        </table>
+        <table class="table-1">
+            <tr>
+                <td class="count">Wins : 0</td>
+                <td class="count">Losses : 0</td>
+                <td class="count">Ties : 0</td>
+            </tr>
+        </table>
+        <button onclick="reset()" style="font-size:large;padding-left: 7px;">Reset</button>
+        <script>
+            const user_choice = document.getElementById('user-choice')
+            const computer_choice = document.getElementById('computer-choice')
+            const game_result = document.getElementById('game-result')
+            const count = document.getElementsByClassName('count')
+            let wins = 0, losses = 0, ties = 0
+            let matches = 0
+            function play(user_cho) {
+                matches++
+                let comp_cho = getRandom()
+                user_choice.innerHTML = `<img src="${getImage(user_cho)}" class="choice-img">`
+                computer_choice.innerHTML = `<img src="${getImage(comp_cho)}" class="choice-img">`
+                if(user_cho === 'Rock'){
+                    if(comp_cho === 'Scissor'){
+                        console.log('User wins')
+                        game_result.innerHTML = 'You win'
+                        wins++
+                    }
+                    else if(comp_cho === 'Paper'){
+                        console.log('User loss')
+                        game_result.innerHTML = 'You lose'
+                        losses++
+                    }
+                    else {
+                        console.log('Game is Tie')
+                        game_result.innerHTML = 'Game is Tie'
+                        ties++
+                    }
+                }
+                else if(user_cho === 'Paper'){
+                    if(comp_cho === 'Rock'){
+                        console.log('User wins')
+                        game_result.innerHTML = 'You win'
+                        wins++
+                    }
+                    else if(comp_cho === 'Scissor'){
+                        console.log('User loss')
+                        game_result.innerHTML = 'You lose'
+                        losses++
+                    }
+                    else {
+                        console.log('Game is Tie')
+                        game_result.innerHTML = 'Game is Tie'
+                        ties++
+                    }
+                }
+                else {
+                    if(comp_cho === 'Paper'){
+                        console.log('User wins')
+                        game_result.innerHTML = 'You win'
+                        wins++
+                    }
+                    else if(comp_cho === 'Rock'){
+                        console.log('User loss')
+                        game_result.innerHTML = 'You lose'
+                        losses++
+                    }
+                    else {
+                        console.log('Game is Tie')
+                        game_result.innerHTML = 'Game is Tie'
+                        ties++
+                    }
+                }
+                count[0].innerHTML = `Wins: ${wins}`
+                count[1].innerHTML = `Losses: ${losses}`
+                count[2].innerHTML = `Ties: ${ties}`
+                if(matches == 10){
+                    if(wins > losses){
+                        alert('🎊You won the game')
+                    }
+                    else if(losses > wins){
+                        alert('😢You lost the game')
+                    }
+                    else {
+                        alert('Game is tie')
+                    }
+                    reset()
+                }
+            }
+            function reset() {
+                wins = 0
+                losses = 0
+                ties = 0
+                matches = 0
+                count[0].innerHTML = `Wins : ${wins}`
+                count[1].innerHTML = `Losses : ${losses}`
+                count[2].innerHTML = `Ties : ${ties}`
+                game_result.innerHTML = '-'
+                user_choice.innerHTML = '-'
+                computer_choice.innerHTML = '-'
+                alert('Game reset successfully')
+            }
+            function getRandom(){
+                let n = Math.round(Math.random()*2)
+                return (n === 0) ? 'Rock' : ((n === 1) ? 'Paper' : 'Scissor')
+            }
+            function getImage(choice) {
+                if (choice === 'Rock') return 'assets/rock.png'
+                if (choice === 'Paper') return 'assets/paper.png'
+                if (choice === 'Scissor') return 'assets/scissors.png'
+            }
+        </script>
+    </div>
+</body>
+</html>
